@@ -1,5 +1,6 @@
-import java.util.List;
-import java.util.Stack;
+import java.lang.reflect.Array;
+import java.util.*;
+
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -120,6 +121,7 @@ public class ListUtilTest {
         cell = listUtil.InsertNth(cell,0,1);
         assertSame(cell.getDatum(), 1);
         assertSame(cell.getNext().getDatum(), 0);
+        assertSame(cell.getNext().getNext(), null);
     }
     @Test
     public void insertNth2(){
@@ -132,6 +134,7 @@ public class ListUtilTest {
             cell=cell.getNext();
         }
         assertSame(cell.getDatum(), 0);
+        assertSame(cell.getNext(), null);
     }
     @Test
      public void insertNth3(){
@@ -144,6 +147,7 @@ public class ListUtilTest {
             cell=cell.getNext();
         }
         assertSame(cell.getDatum(), 0);
+        assertSame(cell.getNext(), null);
     }
     @Test
     public void insertNth4(){
@@ -155,7 +159,7 @@ public class ListUtilTest {
                 last=last.getNext();
                 count++;
             }
-            cell = listUtil.InsertNth(cell,count,i);
+            cell = listUtil.InsertNth(cell, count, i);
         }
         assertSame(cell.getDatum(), 0);
         cell = cell.getNext();
@@ -163,7 +167,59 @@ public class ListUtilTest {
             assertSame(cell.getDatum(), i);
             cell=cell.getNext();
         }
+        assertSame(cell, null);
+    }
+    @Test
+    public void SortedInsert1(){
+        ListCell<Integer> cell = new ListCell<Integer>(0,null);
+        cell = listUtil.SortedInsert(cell,new ListCell(1,null));
+        assertSame(cell.getDatum(),0);
+        assertSame(cell.getNext().getDatum(),1);
+        assertSame(cell.getNext().getNext(),null);
+    }
+    @Test
+    public void SortedInsert2(){
+        ListCell<Integer> cell = new ListCell<Integer>(1,null);
+        cell = listUtil.SortedInsert(cell,new ListCell(0,null));
+        assertSame(cell.getDatum(),0);
+        assertSame(cell.getNext().getDatum(),1);
+        assertSame(cell.getNext().getNext(),null);
+    }
+    @Test
+     public void SortedInsert3() {
+        ListCell<Integer> cell = createList(new int[]{2,4,5,6,8,9,11,12,14,16,17,19,20});
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(0,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(3,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(18,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(13,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(15,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(1,null));
+        cell = listUtil.SortedInsert(cell,new ListCell<Integer>(7,null));
+        cell = listUtil.SortedInsert(cell, new ListCell<Integer>(10, null));
 
+        for(int i=0;i<=20;i++){
+            assertSame(cell.getDatum(),i);
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
+    }
+    @Test
+      public void SortedInsert4() {
+        Integer[] array = new Integer[]{1,4,5,415,458,4,521,2,151,20,4,5,45,16,4,84,16,1,4,8,4,551,6,48,4,21,8,415,165,4985,41,561,65,54,84,5,112,1,984,89,45,56,45,41,21,2,1541,5,3,1,54,5,165,165,4,5415,614,54,54};
+        ArrayList<Integer> sorted = new ArrayList<Integer>();
+        sorted.addAll(Arrays.asList(array));
+        Collections.sort(sorted);
+        ListCell<Integer> cell =new ListCell<Integer>(0,null);
+        for(int i=0;i<array.length;i++){
+            cell = listUtil.SortedInsert(cell,new ListCell(array[i],null));
+        }
+        assertSame(cell.getDatum(),0);
+        cell=cell.getNext();
+        for(int i=0;i<array.length;i++){
+            assertSame(cell.getDatum(),sorted.get(i));
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
     }
 
     public static void main(String[] args) {
