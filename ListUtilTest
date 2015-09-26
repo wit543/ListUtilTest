@@ -1,0 +1,121 @@
+import java.util.List;
+import java.util.Stack;
+import org.junit.Test;
+import org.junit.runner.Description;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+import static org.junit.Assert.*;
+
+/**
+ * Created by WIT-PC on 26/9/2558.
+ */
+public class ListUtilTest {
+    public ListUtil listUtil = new ListUtil();
+    public ListCell listCell1 = new ListCell<Integer>(1,
+            new ListCell<Integer>(2,
+                    new ListCell<Integer>(3,
+                            new ListCell<Integer>(4,
+                                    new ListCell<Integer>(5,null)))));
+    private ListCell<Integer> createList(int[] array){
+        ListCell<Integer> head = new ListCell<Integer>(array[0],null);
+        ListCell<Integer> temp=head;
+        for(int i =1;i<array.length;i++){
+            temp.setNext(new ListCell<Integer>(array[i],null));
+            temp = temp.getNext();
+        }
+        return head;
+    }
+    @Test
+    public void countTest1(){
+        assertSame(listUtil.Count(listCell1,1),1);
+        assertSame(listUtil.Count(listCell1,2),1);
+        assertSame(listUtil.Count(listCell1,3),1);
+        assertSame(listUtil.Count(listCell1,4),1);
+        assertSame(listUtil.Count(listCell1,5),1);
+    }
+    @Test
+    public void countTest2(){
+        ListCell<Integer> cell = createList(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20});
+        for(int i = 1;i<=20;i++){
+            assertSame(listUtil.Count(cell,i),1);
+        }
+    }
+    @Test
+    public void countTest3(){
+        ListCell<Integer> cell = createList(new int[]{3,6, 9,12, 3,6, 9,12, 3,6, 9,12,
+                3,6, 9,12, 3,6, 9,12, 3,6, 9,12,
+                3,6, 9,12, 3,6, 9,12, 3,6, 9,12,
+                3,6, 9,12, 3,6, 9,12, 3,6, 9,12,
+                3,6, 9,12, 3,6, 9,12, 3,6, 9,12,
+                3,6, 9,12, 3,6, 9,12, 3,6, 9,12});
+
+        assertSame(listUtil.Count(cell,3),18);
+        assertSame(listUtil.Count(cell,6),18);
+        assertSame(listUtil.Count(cell,9),18);
+        assertSame(listUtil.Count(cell,12),18);
+    }
+    @Test
+    public void countTest4(){
+        ListCell<Integer> cell = createList(new int[]{
+                1,
+                2,2,
+                3,3,3,
+                4,4,4,4,
+                5,5,5,5,5,
+                6,6,6,6,6,6,
+                7,7,7,7,7,7,7,
+                8,8,8,8,8,8,8,8,
+                9,9,9,9,9,9,9,9,9,
+                10,10,10,10,10,10,10,10,10,10,
+                11,11,11,11,11,11,11,11,11,11,11,
+                12,12,12,12,12,12,12,12,12,12,12,12,
+                13,13,13,13,13,13,13,13,13,13,13,13,13,
+                14,14,14,14,14,14,14,14,14,14,14,14,14,14,
+                15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,
+                16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,
+                17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,
+                18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,
+                19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,
+                20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20
+        });
+        for(int i = 1;i<=20;i++){
+            assertSame(listUtil.Count(cell,i),i);
+        }
+
+    }
+    @Test
+    public void countTest5() {
+        ListCell<Integer> cell = createList(new int[]{
+                15, 15, 15, 15, 15, 15, 15, 15,5, 5, 5, 5, 5,
+                9, 9, 9, 4, 4, 4, 4, 15, 15, 15, 15, 15, 15, 15,
+                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+                8, 8, 8, 8, 18, 18, 18, 18, 18, 18, 18, 18,
+                9, 9, 9, 9, 9, 9, 8, 8, 8, 8,
+                19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
+                14, 14, 14, 14, 14, 14, 14, 17, 17, 17, 17, 17, 17, 17, 17,
+                11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 6, 6, 6, 6, 6, 6,
+                10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+                13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+                14, 14, 14, 14, 14, 14, 14,
+                12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+                17, 17, 17, 17, 17, 17, 17, 17, 17,
+                18, 18, 18, 18, 18, 18, 18, 18,
+                7, 7, 7, 7, 7, 7, 7, 3, 3, 3, 18, 18, 2, 2, 1,
+                20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20
+        });
+        for (int i = 1; i <= 20; i++) {
+            assertSame(listUtil.Count(cell, i), i);
+        }
+    }
+    @Test
+    public void countTest6(){
+        ListCell<Integer> cell = createList(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,24,1,2,4,8,2,5,4,8,6,4,8,5,1,2,15,1,1,5,5,48,4,8});
+        for(int i = 1;i<=20;i++){
+            assertSame(listUtil.Count(cell,i+50),0);
+        }
+    }
+    public static void main(String[] args) {
+        Class<?> testclass = ListUtilTest.class;
+        Result result = org.junit.runner.JUnitCore.runClasses( testclass );
+    }
+}
