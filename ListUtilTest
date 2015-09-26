@@ -26,13 +26,19 @@ public class ListUtilTest {
         }
         return head;
     }
+    private ArrayList<Integer> createSortedArrayList(Integer[] array){
+        ArrayList<Integer> sorted = new ArrayList<Integer>();
+        sorted.addAll(Arrays.asList(array));
+        Collections.sort(sorted);
+        return sorted;
+    }
     @Test
     public void countTest1(){
         assertSame(listUtil.Count(listCell1,1),1);
         assertSame(listUtil.Count(listCell1,2),1);
         assertSame(listUtil.Count(listCell1,3),1);
-        assertSame(listUtil.Count(listCell1,4),1);
-        assertSame(listUtil.Count(listCell1,5),1);
+        assertSame(listUtil.Count(listCell1, 4), 1);
+        assertSame(listUtil.Count(listCell1, 5), 1);
     }
     @Test
     public void countTest2(){
@@ -198,7 +204,7 @@ public class ListUtilTest {
         cell = listUtil.SortedInsert(cell, new ListCell<Integer>(10, null));
 
         for(int i=0;i<=20;i++){
-            assertSame(cell.getDatum(),i);
+            assertSame(cell.getDatum(), i);
             cell=cell.getNext();
         }
         assertSame(cell,null);
@@ -206,22 +212,59 @@ public class ListUtilTest {
     @Test
       public void SortedInsert4() {
         Integer[] array = new Integer[]{1,4,5,415,458,4,521,2,151,20,4,5,45,16,4,84,16,1,4,8,4,551,6,48,4,21,8,415,165,4985,41,561,65,54,84,5,112,1,984,89,45,56,45,41,21,2,1541,5,3,1,54,5,165,165,4,5415,614,54,54};
-        ArrayList<Integer> sorted = new ArrayList<Integer>();
-        sorted.addAll(Arrays.asList(array));
-        Collections.sort(sorted);
         ListCell<Integer> cell =new ListCell<Integer>(0,null);
         for(int i=0;i<array.length;i++){
             cell = listUtil.SortedInsert(cell,new ListCell(array[i],null));
         }
+        ArrayList<Integer> sorted = createSortedArrayList(array);
         assertSame(cell.getDatum(),0);
         cell=cell.getNext();
         for(int i=0;i<array.length;i++){
-            assertSame(cell.getDatum(),sorted.get(i));
+            assertEquals(cell.getDatum(), sorted.get(i));
             cell=cell.getNext();
         }
         assertSame(cell,null);
     }
-
+    @Test
+     public void InsertSort1(){
+        ListCell<Integer> cell = new ListCell<Integer>(1,null);
+        cell =listUtil.InsertSort(cell);
+        assertSame(cell.getDatum(), 1);
+        assertSame(cell.getNext(),null);
+    }
+    @Test
+    public void InsertSort2(){
+        ListCell<Integer> cell = createList(new int[]{5,4,3,2,1});
+        ArrayList<Integer> sorted = createSortedArrayList(new Integer[]{5,4,3,2,1});
+        cell =listUtil.InsertSort(cell);
+        for(int i =0;i<sorted.size();i++){
+            assertEquals(cell.getDatum(), sorted.get(i));
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
+    }
+    @Test
+    public void InsertSort3(){
+        ListCell<Integer> cell = createList(new int[]{0,1,51,9,456,15,1485,15,1652,195,156,2162,15,4198,121,21,6514,651,561,564,8741,561,62,15,498,45,162,19498,41,521,6,489,45,1,61,41,8941,521,26,1,418,15,126,165,48,4,8541});
+        ArrayList<Integer> sorted = createSortedArrayList(new Integer[]{0,1,51,9,456,15,1485,15,1652,195,156,2162,15,4198,121,21,6514,651,561,564,8741,561,62,15,498,45,162,19498,41,521,6,489,45,1,61,41,8941,521,26,1,418,15,126,165,48,4,8541});
+        cell =listUtil.InsertSort(cell);
+        for(int i =0;i<sorted.size();i++){
+            assertEquals(cell.getDatum(), sorted.get(i));
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
+    }
+    @Test
+    public void InsertSort4(){
+        ListCell<Integer> cell = createList(new int[]{51,515,61,651,51,21,64,8941,562,154,12,12,12,131,2,15,15,13,21,61,151,4561,23,15,415,5,410,61,651,451,5621,65,415,16,521,604,156,15,15,6156,1,45,4,54,564,541,62,165,45,16,21,94,9854,156,162,1,841,851,5621,2315,148,4185,156,123,15,1,951,521212,13,15,15,4189,485,156,21,61,49841,5,156,1,651,9841,95,165,16,51,98541,5,156,165,419841,65165,165,41985,4156,13216,5498,465,1,321,151587});
+        ArrayList<Integer> sorted = createSortedArrayList(new Integer[]{51,515,61,651,51,21,64,8941,562,154,12,12,12,131,2,15,15,13,21,61,151,4561,23,15,415,5,410,61,651,451,5621,65,415,16,521,604,156,15,15,6156,1,45,4,54,564,541,62,165,45,16,21,94,9854,156,162,1,841,851,5621,2315,148,4185,156,123,15,1,951,521212,13,15,15,4189,485,156,21,61,49841,5,156,1,651,9841,95,165,16,51,98541,5,156,165,419841,65165,165,41985,4156,13216,5498,465,1,321,151587});
+        cell =listUtil.InsertSort(cell);
+        for(int i =0;i<sorted.size();i++){
+            assertEquals(cell.getDatum(), sorted.get(i));
+            cell=cell.getNext();
+        }
+        assertSame(cell, null);
+    }
     public static void main(String[] args) {
         Class<?> testclass = ListUtilTest.class;
         Result result = org.junit.runner.JUnitCore.runClasses( testclass );
