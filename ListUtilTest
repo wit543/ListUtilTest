@@ -114,6 +114,58 @@ public class ListUtilTest {
             assertSame(listUtil.Count(cell,i+50),0);
         }
     }
+    @Test
+    public void insertNth1(){
+        ListCell<Integer> cell = new ListCell<Integer>(0,null);
+        cell = listUtil.InsertNth(cell,0,1);
+        assertSame(cell.getDatum(), 1);
+        assertSame(cell.getNext().getDatum(), 0);
+    }
+    @Test
+    public void insertNth2(){
+        ListCell<Integer> cell = new ListCell<Integer>(0,null);
+        for(int i = 0;i<=20;i++){
+            cell = listUtil.InsertNth(cell,0,i);
+        }
+        for(int i = 20;i>=0;i--){
+            assertSame(cell.getDatum(), i);
+            cell=cell.getNext();
+        }
+        assertSame(cell.getDatum(), 0);
+    }
+    @Test
+     public void insertNth3(){
+        ListCell<Integer> cell = new ListCell<Integer>(0,null);
+        for(int i = 0;i<=20;i++){
+            cell = listUtil.InsertNth(cell,i,i);
+        }
+        for(int i = 0;i<=20;i++){
+            assertSame(cell.getDatum(), i);
+            cell=cell.getNext();
+        }
+        assertSame(cell.getDatum(), 0);
+    }
+    @Test
+    public void insertNth4(){
+        ListCell<Integer> cell = new ListCell<Integer>(0,null);
+        for(int i = 0;i<=20;i++){
+            ListCell<Integer> last = cell;
+            int count =0;
+            while (last!=null){
+                last=last.getNext();
+                count++;
+            }
+            cell = listUtil.InsertNth(cell,count,i);
+        }
+        assertSame(cell.getDatum(), 0);
+        cell = cell.getNext();
+        for(int i = 0;i<=20;i++){
+            assertSame(cell.getDatum(), i);
+            cell=cell.getNext();
+        }
+
+    }
+
     public static void main(String[] args) {
         Class<?> testclass = ListUtilTest.class;
         Result result = org.junit.runner.JUnitCore.runClasses( testclass );
