@@ -257,13 +257,50 @@ public class ListUtilTest {
     @Test
     public void InsertSort4(){
         ListCell<Integer> cell = createList(new int[]{51,515,61,651,51,21,64,8941,562,154,12,12,12,131,2,15,15,13,21,61,151,4561,23,15,415,5,410,61,651,451,5621,65,415,16,521,604,156,15,15,6156,1,45,4,54,564,541,62,165,45,16,21,94,9854,156,162,1,841,851,5621,2315,148,4185,156,123,15,1,951,521212,13,15,15,4189,485,156,21,61,49841,5,156,1,651,9841,95,165,16,51,98541,5,156,165,419841,65165,165,41985,4156,13216,5498,465,1,321,151587});
-        ArrayList<Integer> sorted = createSortedArrayList(new Integer[]{51,515,61,651,51,21,64,8941,562,154,12,12,12,131,2,15,15,13,21,61,151,4561,23,15,415,5,410,61,651,451,5621,65,415,16,521,604,156,15,15,6156,1,45,4,54,564,541,62,165,45,16,21,94,9854,156,162,1,841,851,5621,2315,148,4185,156,123,15,1,951,521212,13,15,15,4189,485,156,21,61,49841,5,156,1,651,9841,95,165,16,51,98541,5,156,165,419841,65165,165,41985,4156,13216,5498,465,1,321,151587});
+        ArrayList<Integer> sorted = createSortedArrayList(new Integer[]{51, 515, 61, 651, 51, 21, 64, 8941, 562, 154, 12, 12, 12, 131, 2, 15, 15, 13, 21, 61, 151, 4561, 23, 15, 415, 5, 410, 61, 651, 451, 5621, 65, 415, 16, 521, 604, 156, 15, 15, 6156, 1, 45, 4, 54, 564, 541, 62, 165, 45, 16, 21, 94, 9854, 156, 162, 1, 841, 851, 5621, 2315, 148, 4185, 156, 123, 15, 1, 951, 521212, 13, 15, 15, 4189, 485, 156, 21, 61, 49841, 5, 156, 1, 651, 9841, 95, 165, 16, 51, 98541, 5, 156, 165, 419841, 65165, 165, 41985, 4156, 13216, 5498, 465, 1, 321, 151587});
         cell =listUtil.InsertSort(cell);
         for(int i =0;i<sorted.size();i++){
             assertEquals(cell.getDatum(), sorted.get(i));
             cell=cell.getNext();
         }
         assertSame(cell, null);
+    }
+    @Test
+    public void RemoveDuplicates1(){
+        ListCell<Integer> cell = createList(new int[]{1, 1});
+        cell = listUtil.RemoveDuplicates(cell);
+        assertSame(cell.getDatum(),1);
+        assertSame(cell.getNext(),null);
+    }
+    @Test
+    public void RemoveDuplicates2(){
+        ListCell<Integer> cell = createList(new int[]{1});
+        cell = listUtil.RemoveDuplicates(cell);
+        assertSame(cell.getDatum(),1);
+        assertSame(cell.getNext(),null);
+    }
+    @Test
+    public void RemoveDuplicates3(){
+        ListCell<Integer> cell = createList(new int[]{1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,6,6,6,6,6,6,6,7,7,7,7,8,8,8,8,8,9,9,9});
+        cell = listUtil.RemoveDuplicates(listUtil.InsertSort(cell));
+        for(int i =1;i<10;i++){
+            assertSame(cell.getDatum(), i);
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
+    }
+    @Test
+    public void RemoveDuplicates4(){
+        ListCell<Integer> cell = createList(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,3,3,4,4,4,4,5,5,5,5,5,5,11,11,12,12,15,15,15,15,15,21,21,21,21,21,21,21,21,21,23,31,31,31,32,33,45,45,45,45,46,48,48,51,51,51,51,51,54,54,54,61,61,62});
+        ArrayList<Integer> list = createSortedArrayList(new Integer[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,3,3,4,4,4,4,5,5,5,5,5,5,11,11,12,12,15,15,15,15,15,21,21,21,21,21,21,21,21,21,23,31,31,31,32,33,45,45,45,45,46,48,48,51,51,51,51,51,54,54,54,61,61,62});
+        list = new ArrayList<Integer>(new HashSet<Integer>(list));
+        Collections.sort(list);
+        cell = listUtil.RemoveDuplicates(cell);
+        for(int i =0;i<list.size();i++){
+            assertEquals(cell.getDatum(), list.get(i));
+            cell=cell.getNext();
+        }
+        assertSame(cell,null);
     }
     public static void main(String[] args) {
         Class<?> testclass = ListUtilTest.class;
