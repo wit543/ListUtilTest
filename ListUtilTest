@@ -282,7 +282,7 @@ public class ListUtilTest {
     @Test
     public void RemoveDuplicates3(){
         ListCell<Integer> cell = createList(new int[]{1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,6,6,6,6,6,6,6,7,7,7,7,8,8,8,8,8,9,9,9});
-        cell = listUtil.RemoveDuplicates(listUtil.InsertSort(cell));
+        cell = listUtil.RemoveDuplicates(cell);
         for(int i =1;i<10;i++){
             assertSame(cell.getDatum(), i);
             cell=cell.getNext();
